@@ -83,6 +83,7 @@ int LambdaWindow::getWndInfo(int nWnd, DrvWndInfo *pWndInfo)
 
 int LambdaWindow::getCommandInfo(int nCommand, DrvCommandInfo *pCommandInfo)
 {
+    if(nCommand >= CommandsCount) return -1;
     switch(nCommand)
     {
     case 0:
