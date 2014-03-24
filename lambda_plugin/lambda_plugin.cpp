@@ -15,6 +15,8 @@ QWidget* createMainWindow()
 ///-------------------------------------
 LambdaWindow::LambdaWindow()
 {
+    QTextCodec::setCodecForCStrings(QTextCodec::codecForName("utf-8"));
+
     lmWin = 0;
     classNum = 0;
     drvNum = 0;
@@ -88,63 +90,63 @@ int LambdaWindow::getCommandInfo(int nCommand, DrvCommandInfo *pCommandInfo)
     switch(nCommand)
     {
     case 0:
-        pCommandInfo->Name = "READ_CONSTANT_MODE_F";
-        pCommandInfo->Annotation = "getting constant mode";
+        pCommandInfo->Name = "Запрос режима вывода";//"READ_CONSTANT_MODE_F";
+        pCommandInfo->Annotation = "Получение режима вывода (Вольт / Ампер / Выкл)";
         pCommandInfo->NumParam = 0;
         break;
     case 1:
-        pCommandInfo->Name = "MEAS_VOLTAGE_F";
-        pCommandInfo->Annotation = "measuring voltage level";
+        pCommandInfo->Name = "Измерить напряжение";//"MEAS_VOLTAGE_F";
+        pCommandInfo->Annotation = "Запрос текущего напряжения";
         pCommandInfo->NumParam = 0;
         break;
     case 2:
-        pCommandInfo->Name = "MEAS_CURRENT_F";
-        pCommandInfo->Annotation = "measuring current level";
+        pCommandInfo->Name = "Измерить ток";//"MEAS_CURRENT_F";
+        pCommandInfo->Annotation = "Запрос текущей силы тока";
         pCommandInfo->NumParam = 0;
         break;
     case 3:
-        pCommandInfo->Name = "SET_VOLT_LIMIT_F";
-        pCommandInfo->Annotation = "apply voltage limit";
+        pCommandInfo->Name = "Установить напряжение";//"SET_VOLT_LIMIT_F";
+        pCommandInfo->Annotation = "Установка заданного напряжения";
         pCommandInfo->NumParam = 1;
         break;
     case 4:
-        pCommandInfo->Name = "SET_CURR_LIMIT_F";
-        pCommandInfo->Annotation = "apply current limit";
+        pCommandInfo->Name = "Установить силу тока";//"SET_CURR_LIMIT_F";
+        pCommandInfo->Annotation = "Установка заданной силы тока";
         pCommandInfo->NumParam = 1;
         break;
     case 5:
-        pCommandInfo->Name = "SET_OUTPUT_STATE_F";
-        pCommandInfo->Annotation = "on/off output";
+        pCommandInfo->Name = "Управление состоянием вывода";//"SET_OUTPUT_STATE_F";
+        pCommandInfo->Annotation = "Вкл / выкл вывод данных";
         pCommandInfo->NumParam = 1;
         break;
     case 6:
-        pCommandInfo->Name = "SET_SETTING_MODE_F";
-        pCommandInfo->Annotation = "local / remote / same as remote";
+        pCommandInfo->Name = "Установка типа управления";//"SET_SETTING_MODE_F";
+        pCommandInfo->Annotation = "Локальное / Удаленное / Удаленное без отображения статуса на панели устройства";
         pCommandInfo->NumParam = 1;
         break;
     case 7:
-        pCommandInfo->Name = "SET_START_MODE_F";
-        pCommandInfo->Annotation = "safe start / auto restart mode";
+        pCommandInfo->Name = "Установка режима запуска";//"SET_START_MODE_F";
+        pCommandInfo->Annotation = "Безопасный старт / Авто перезагрузка";
         pCommandInfo->NumParam = 1;
         break;
     case 8:
-        pCommandInfo->Name = "SET_OVERVOLT_PROTECTION_F";
-        pCommandInfo->Annotation = "over-voltage protection level";
+        pCommandInfo->Name = "Установить верхнюю границу напряжения";//"SET_OVERVOLT_PROTECTION_F";
+        pCommandInfo->Annotation = "Установить верхнюю границу напряжения";
         pCommandInfo->NumParam = 1;
         break;
     case 9:
-        pCommandInfo->Name = "SET_UNDERVOLT_LIMIT_F";
-        pCommandInfo->Annotation = "The under-voltage limit keeps the voltage setting from being less than a certain value.";
+        pCommandInfo->Name = "Установить нижнюю границу напряжения";//"SET_UNDERVOLT_LIMIT_F";
+        pCommandInfo->Annotation = "Установить нижнюю границу напряжения";
         pCommandInfo->NumParam = 1;
         break;
     case 10:
-        pCommandInfo->Name = "SET_FOLDBACK_PROTECTION_F";
-        pCommandInfo->Annotation = "This command enables or disables the foldback protection. ";
+        pCommandInfo->Name = "Использовать защиту с задержкой";//"SET_FOLDBACK_PROTECTION_F";
+        pCommandInfo->Annotation = "Вкл / выкл режим работы с защитой";
         pCommandInfo->NumParam = 1;
         break;
     case 11:
-        pCommandInfo->Name = "RESET_PS_SETTINGS_F";
-        pCommandInfo->Annotation = "RESET_PS_SETTINGS";
+        pCommandInfo->Name = "Установить настройки по умолчанию";//"RESET_PS_SETTINGS_F";
+        pCommandInfo->Annotation = "Установить настройки по умолчанию";
         pCommandInfo->NumParam = 0;
         break;
     }
@@ -172,16 +174,31 @@ int LambdaWindow::getCommandParamInfo(int nCommand, int nParam,
     case 4:
     case 8:
     case 9:
-        pCommandParamInfo->Name = "val";
-        pCommandParamInfo->Annotation = "some double value";
+        pCommandParamInfo->Name = "Параметр";
+        pCommandParamInfo->Annotation = "Значение";
         pCommandParamInfo->Type = TYPE_DOUBLE;
         pCommandParamInfo->LRange = 0;
         pCommandParamInfo->RRange = 0;
         break;
-    default:
-        pCommandParamInfo->Name = "val";
-        pCommandParamInfo->Annotation = "some int value";
-        pCommandParamInfo->Type = TYPE_INT;
+    case 5:
+    case 10:
+        pCommandParamInfo->Name = "Статус";
+        pCommandParamInfo->Annotation = "ВКЛ\nВЫКЛ\n";
+        pCommandParamInfo->Type = TYPE_ENUM;
+        pCommandParamInfo->LRange = 0;
+        pCommandParamInfo->RRange = 0;
+        break;
+    case 6:
+        pCommandParamInfo->Name = "Тип управления";
+        pCommandParamInfo->Annotation = "Локальное\nУдаленное\nУдаленное без отображение на панели\n";
+        pCommandParamInfo->Type = TYPE_ENUM;
+        pCommandParamInfo->LRange = 0;
+        pCommandParamInfo->RRange = 0;
+        break;
+    case 7:
+        pCommandParamInfo->Name = "Режим запуска";
+        pCommandParamInfo->Annotation = "Безопасный старт\nАвто перезагрузка\n";
+        pCommandParamInfo->Type = TYPE_ENUM;
         pCommandParamInfo->LRange = 0;
         pCommandParamInfo->RRange = 0;
         break;
@@ -232,6 +249,54 @@ int LambdaWindow::makeCommand(int nCommand,
                               PasportSaveValMgr *pArrayPasportSaveVal)
 {
     if (nCommand < 0 || nCommand >= CommandsCount) return -1;
+    switch (nCommand)
+    {
+    case 0:
+        READ_CONSTANT_MODE_F();
+        break;
+    case 1:
+        MEAS_VOLTAGE_f();
+        break;
+    case 2:
+        MEAS_CURRENT_F();
+        break;
+    case 3:
+        double *voltLimit = (double *)pData;
+        SET_VOLT_LIMIT_F(*voltLimit);
+        break;
+    case 4:
+        double *currLimit = (double *)pData;
+        SET_CURR_LIMIT_F(*currLimit);
+        break;
+    case 5:
+        int *state = (int*) pData;
+        SET_OUTPUT_STATE_F(*state);
+        break;
+    case 6:
+        int *contrState = (int*) pData;
+        SET_SETTING_MODE_F(*contrState);
+        break;
+    case 7:
+        int *startState = (int *) pData;
+        SET_START_MODE_F(*startState);
+        break;
+    case 8:
+        double *overv = (double *) pData;
+        SET_OVERVOLT_PROTECTION_F(*overv);
+        break;
+    case 9:
+        double *underv = (double *) pData;
+        SET_UNDERVOLT_LIMIT_F(*underv);
+        break;
+    case 10:
+        int *foldState = (int *) pData;
+        SET_FOLDBACK_PROTECTION_F(*foldState);
+        break;
+    case 11:
+        RESET_PS_SETTINGS_F();
+        break;
+    }
+
     return 0;
 }
 
