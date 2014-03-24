@@ -71,6 +71,7 @@ int LambdaWindow::getInfo(DrvInfo *pDrvInfo)
 int LambdaWindow::getWndInfo(int nWnd, DrvWndInfo *pWndInfo)
 {
     if (!lmWin) return -1;
+    if (nWnd >= WndCount || nWnd < 0) return -1;
     pWndInfo->wnd = (void*) lmWin;
     pWndInfo->name = lmWin->objectName();
     pWndInfo->bShowForAdmin = true;
@@ -83,7 +84,7 @@ int LambdaWindow::getWndInfo(int nWnd, DrvWndInfo *pWndInfo)
 
 int LambdaWindow::getCommandInfo(int nCommand, DrvCommandInfo *pCommandInfo)
 {
-    if(nCommand >= CommandsCount) return -1;
+    if(nCommand >= CommandsCount || nCommand < 0) return -1;
     switch(nCommand)
     {
     case 0:
@@ -153,6 +154,8 @@ int LambdaWindow::getCommandInfo(int nCommand, DrvCommandInfo *pCommandInfo)
 int LambdaWindow::getCommandParamInfo(int nCommand, int nParam,
                                       DrvCommandParamInfo *pCommandParamInfo)
 {
+    if (nCommand >= CommandsCount || nCommand < 0) return -1;
+    if (nParam > 1 || nParam < 0) return 0;
     switch (nCommand)
     {
     case 0:
@@ -228,6 +231,7 @@ int LambdaWindow::makeCommand(int nCommand,
                               int nActiveObject,
                               PasportSaveValMgr *pArrayPasportSaveVal)
 {
+    if (nCommand < 0 || nCommand >= CommandsCount) return -1;
     return 0;
 }
 
