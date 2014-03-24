@@ -1,0 +1,12 @@
+#ifndef LAMBDA_DRV_GLOBAL_H
+#define LAMBDA_DRV_GLOBAL_H
+
+#include <QtCore/qglobal.h>
+
+#if defined(LAMBDA_DRV_LIBRARY)
+#  define LAMBDA_DRVSHARED_EXPORT Q_DECL_EXPORT
+#else
+#  define LAMBDA_DRVSHARED_EXPORT Q_DECL_IMPORT
+#endif
+
+#endif // LAMBDA_DRV_GLOBAL_H
