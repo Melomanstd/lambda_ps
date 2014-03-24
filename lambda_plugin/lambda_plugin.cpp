@@ -255,42 +255,42 @@ int LambdaWindow::makeCommand(int nCommand,
         READ_CONSTANT_MODE_F();
         break;
     case 1:
-        MEAS_VOLTAGE_f();
+        MEAS_VOLTAGE_F();
         break;
     case 2:
         MEAS_CURRENT_F();
         break;
     case 3:
-        double *voltLimit = (double *)pData;
-        SET_VOLT_LIMIT_F(*voltLimit);
+//        double voltLimit = *((double *)pData);
+        SET_VOLT_LIMIT_F(*((double *)pData));
         break;
     case 4:
-        double *currLimit = (double *)pData;
-        SET_CURR_LIMIT_F(*currLimit);
+//        double currLimit = *((double *)pData);
+        SET_CURR_LIMIT_F(*((double *)pData));
         break;
     case 5:
-        int *state = (int*) pData;
-        SET_OUTPUT_STATE_F(*state);
+//        int state = *((int*) pData);
+        SET_OUTPUT_STATE_F(*((int*) pData));
         break;
     case 6:
-        int *contrState = (int*) pData;
-        SET_SETTING_MODE_F(*contrState);
+        //int contrState = *((int*) pData);
+        SET_SETTING_MODE_F(*((int*) pData));
         break;
     case 7:
-        int *startState = (int *) pData;
-        SET_START_MODE_F(*startState);
+//        int startState = *((int *) pData);
+        SET_START_MODE_F(*((int *) pData));
         break;
     case 8:
-        double *overv = (double *) pData;
-        SET_OVERVOLT_PROTECTION_F(*overv);
+//        double overv = *((double *) pData);
+        SET_OVERVOLT_PROTECTION_F(*((double *) pData));
         break;
     case 9:
-        double *underv = (double *) pData;
-        SET_UNDERVOLT_LIMIT_F(*underv);
+//        double underv = *((double *) pData);
+        SET_UNDERVOLT_LIMIT_F(*((double *) pData));
         break;
     case 10:
-        int *foldState = (int *) pData;
-        SET_FOLDBACK_PROTECTION_F(*foldState);
+//        int foldState = *((int *) pData);
+        SET_FOLDBACK_PROTECTION_F(*((int *) pData));
         break;
     case 11:
         RESET_PS_SETTINGS_F();
