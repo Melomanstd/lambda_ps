@@ -17,6 +17,7 @@ LambdaWindow::LambdaWindow()
 {
     QTextCodec::setCodecForCStrings(QTextCodec::codecForName("utf-8"));
 
+    varCount = 4;
     lmWin = 0;
     classNum = 0;
     drvNum = 0;
@@ -61,7 +62,7 @@ int LambdaWindow::getInfo(DrvInfo *pDrvInfo)
     pDrvInfo->Annotation = DrvAnnotation;
     pDrvInfo->Version = DrvVersion;
     pDrvInfo->NumCommand = CommandsCount;
-    pDrvInfo->NumDRVar = -1;
+    pDrvInfo->NumDRVar = varCount;
     pDrvInfo->NumDOVar = -1;
     pDrvInfo->NumWnd = WndCount;
     pDrvInfo->bCreateProtocol = false;
@@ -241,7 +242,43 @@ int LambdaWindow::getDOInfo(int nVar, DrvVariableInfo *pDataVariable)
 {return 0;}
 
 int LambdaWindow::getDRInfo(int nVar, DrvVariableInfo *pDataVariable)
-{return 0;}
+{
+    if (nVar < 0 || nVar >= varCount) return -1;
+    if (!lmWin) return -1;
+    switch(nVar)
+    {
+    case 0:
+        pDataVariable->Name = "Напряжение(V)";
+        pDataVariable->Annotation = "Текущее напряжение";
+        pDataVariable->Type = TYPE_DOUBLE;
+        pDataVariable->ED = "Вольт";
+        pDataVariable->pValue = (void*) &lmWin->voltage;
+        break;
+    case 1:
+        pDataVariable->Name = "Сила тока(А)";
+        pDataVariable->Annotation = "Текущая сила тока";
+        pDataVariable->Type = TYPE_DOUBLE;
+        pDataVariable->ED = "Ампер";
+        pDataVariable->pValue = (void*) &lmWin->current;
+        break;
+    case 2:
+        pDataVariable->Name = "Мин. Напряжение";
+        pDataVariable->Annotation = "Мин. Напряжение";
+        pDataVariable->Type = TYPE_DOUBLE;
+        pDataVariable->ED = "Вольт";
+        pDataVariable->pValue = (void*) &lmWin->underVoltLimit;
+        break;
+    case 3:
+        pDataVariable->Name = "Макс. Напряжение";
+        pDataVariable->Annotation = "Макс. Напряжение";
+        pDataVariable->Type = TYPE_DOUBLE;
+        pDataVariable->ED = "Вольт";
+        pDataVariable->pValue = (void*) &lmWin->overVoltLimit;
+        break;
+    }
+
+    return 0;
+}
 
 int LambdaWindow::makeCommand(int nCommand,
                               char *pData,
@@ -255,10 +292,10 @@ int LambdaWindow::makeCommand(int nCommand,
         READ_CONSTANT_MODE_F();
         break;
     case 1:
-        MEAS_VOLTAGE_F();
+        voltage = QString(MEAS_VOLTAGE_F());
         break;
     case 2:
-        MEAS_CURRENT_F();
+        current = QString(MEAS_CURRENT_F());
         break;
     case 3:
 //        double voltLimit = *((double *)pData);
@@ -283,10 +320,12 @@ int LambdaWindow::makeCommand(int nCommand,
     case 8:
 //        double overv = *((double *) pData);
         SET_OVERVOLT_PROTECTION_F(*((double *) pData));
+        overVoltLimit = QString(GET_OVERVOLT_PROTECTION_F());
         break;
     case 9:
 //        double underv = *((double *) pData);
         SET_UNDERVOLT_LIMIT_F(*((double *) pData));
+        underVoltLimit = QString(GET_UNDERVOLT_LIMIT_F());
         break;
     case 10:
 //        int foldState = *((int *) pData);

@@ -127,6 +127,8 @@ void MainWindow::stateUpdated(double par1, double par2, QString par3)
         SET_CURR_LIMIT_F(ui->curr_output->value());
         curr_updated = false;
     }
+    voltage = QString::number(par1);
+    current = QString::number(par2);
     ui->voltage_output_lcd->display(par1);//psDrvPtr->MEAS_VOLTAGE_F().toDouble());
     ui->current_output_lcd->display(par2);//psDrvPtr->MEAS_CURRENT_F().toDouble());
     ui->const_mode_lbl->setText(par3.trimmed());//psDrvPtr->READ_CONSTANT_MODE_F());
@@ -140,6 +142,7 @@ void MainWindow::on_volt_dial_valueChanged(int val)
 void MainWindow::on_underVolt_valueChanged(double val)
 {
 //    psDrvPtr->SET_UNDERVOLT_LIMIT_F(val);
+    underVoltLimit = QString::number(val);
     SET_UNDERVOLT_LIMIT_F(val);
 //    int t = qRound(val*100);
     ui->volt_dial->setMinimum(qRound(val*5));
@@ -149,6 +152,7 @@ void MainWindow::on_overVolt_valueChanged(double val)
 {
 //    psDrvPtr->SET_OVERVOLT_PROTECTION_F(val);
     SET_OVERVOLT_PROTECTION_F(val);
+    overVoltLimit = QString::number(val);
     int t = qRound(val*100);
     ui->volt_dial->setMaximum(t-qRound(val*5));
     ui->volt_dial->setNotchTarget(ui->volt_dial->maximum()/10);

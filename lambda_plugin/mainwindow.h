@@ -47,6 +47,8 @@ public slots:
     
 public:
     QTranslator translator;
+    QString voltage, current;
+    QString underVoltLimit, overVoltLimit;
 
 private:
     Ui::MainWindow *ui;
@@ -55,6 +57,8 @@ private:
     bool connected;
     bool volt_updated;
     bool curr_updated;
+
+
 
 //    LambdaDrv *psDrvPtr;
 };

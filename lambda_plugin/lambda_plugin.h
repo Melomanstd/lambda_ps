@@ -57,12 +57,17 @@ public:
 protected:
     int classNum;
     int drvNum;
+    int varCount;
     QString DrvName;
     QString ClassName;
     QString DrvAnnotation;
     QString DrvVersion;
     int CommandsCount;
     int WndCount;
+
+    //plugins variables
+    QString voltage, current;
+    QString underVoltLimit, overVoltLimit;
 };
 
 //class LAMBDA_PLUGINSHARED_EXPORT Lambda_plugin
