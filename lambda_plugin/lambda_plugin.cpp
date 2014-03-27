@@ -19,8 +19,8 @@ LambdaWindow::LambdaWindow()
 
     varCount = 4;
     lmWin = 0;
-    classNum = 0;
-    drvNum = 0;
+    classNum = 1;
+    drvNum = 1;
     DrvName = "LambdaDrv";
     ClassName = "lambda_plugin";
     DrvAnnotation = "Lambda power supply driver";
