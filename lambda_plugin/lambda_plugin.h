@@ -49,7 +49,7 @@ public:
     QStringList variables() const;
     int getDOInfo(int nVar, DrvVariableInfo *pDataVariable);
     int getDRInfo(int nVar, DrvVariableInfo *pDataVariable);
-    int makeCommand(int nCommand, char *pData, int nActiveObject, PasportSaveValMgr *pArrayPasportSaveVal);
+    int makeCommand(int nCommand, QByteArray &pData, int nActiveObject, PasportSaveValMgr *pArrayPasportSaveVal);
     int drvInit(DrvInitInfo *pDrvInitInfo);
     int drvSuspend();
     QString getErrorStr(int nErrorCode);

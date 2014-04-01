@@ -47,8 +47,8 @@ public slots:
     
 public:
     QTranslator translator;
-    QString voltage, current;
-    QString underVoltLimit, overVoltLimit;
+    double voltage, current;
+    double underVoltLimit, overVoltLimit;
 
 private:
     Ui::MainWindow *ui;
