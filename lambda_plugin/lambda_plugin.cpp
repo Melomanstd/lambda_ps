@@ -222,13 +222,15 @@ int LambdaWindow::getCommandParamInfo(int nCommand, int nParam,
 
 int LambdaWindow::drvOpen()
 {
-    createWindow();
-//    openSocket("192.168.1.25", "8003");
+//    createWindow();
+//    openSocket("192.168.1.103", "8003");
+//    SET_OUTPUT_STATE_F(1);
     return 0;
 }
 
 int LambdaWindow::drvClose()
 {
+    closeSocket();
     destroyWindow();
     return 0;
 }
@@ -287,19 +289,20 @@ int LambdaWindow::makeCommand(int nCommand,
                               PasportSaveValMgr *pArrayPasportSaveVal)
 {
     if (nCommand < 0 || nCommand >= CommandsCount) return -1;
+    openSocket("192.168.1.103", "8003");
     QDataStream data(pData);
     qreal t1=0;
-    quint32 t2 = 0;
+    quint8 t2 = 0;
     switch (nCommand)
     {
     case 0:
         READ_CONSTANT_MODE_F();
         break;
     case 1:
-        voltage = QString(MEAS_VOLTAGE_F());
+//        voltage = QString(MEAS_VOLTAGE_F());
         break;
     case 2:
-        current = QString(MEAS_CURRENT_F());
+//        current = QString(MEAS_CURRENT_F());
         break;
     case 3:
 //        double voltLimit = *((double *)pData);
@@ -336,14 +339,14 @@ int LambdaWindow::makeCommand(int nCommand,
         t1=0;
         data>>t1;
         SET_OVERVOLT_PROTECTION_F(t1);//*((double *) pData));
-        overVoltLimit = QString(GET_OVERVOLT_PROTECTION_F());
+//        overVoltLimit = QString(GET_OVERVOLT_PROTECTION_F());
         break;
     case 9:
 //        double underv = *((double *) pData);
         t1=0;
         data>>t1;
         SET_UNDERVOLT_LIMIT_F(t1);//*((double *) pData));
-        underVoltLimit = QString(GET_UNDERVOLT_LIMIT_F());
+//        underVoltLimit = QString(GET_UNDERVOLT_LIMIT_F());
         break;
     case 10:
 //        int foldState = *((int *) pData);
@@ -356,6 +359,7 @@ int LambdaWindow::makeCommand(int nCommand,
         break;
     }
 
+    closeSocket();
     return 0;
 }
 

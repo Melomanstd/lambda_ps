@@ -16,6 +16,7 @@ public:
     
 signals:
     void stateUpdate(double par1, double par2, QString par3);
+    void connectionLost();
     
 public slots:
     void stopThread();

@@ -48,9 +48,11 @@ MainWindow::MainWindow(QWidget *parent) :
     thr = new Thread;
 //    checkTimer.start(500);
 
+    connect(ui->connect_btn, SIGNAL(clicked()), this, SLOT(connectClicked()));
     connect(&checkTimer, SIGNAL(timeout()), this, SLOT(checkState()));
     connect(thr, SIGNAL(stateUpdate(double,double,QString)), this, SLOT(stateUpdated(double,double,QString)));
-    thr->start();
+    connect(thr, SIGNAL(connectionLost()), this, SLOT(connectionLost()));
+//    thr->start();
 }
 
 MainWindow::~MainWindow()
@@ -65,21 +67,25 @@ void MainWindow::connectClicked()
     if (!connected)
     {
         QByteArray ip = ui->ip_edit->text().toAscii();
-        openSocket(ip.data(), "8003");
+        int state = openSocket(ip.data(), "8003");
+        if (state<0) return;
         updateInerface();
         connected = true;
+        thr->start();
         ui->connect_btn->setText("Disconnect");
     }
     else
     {
         closeSocket();
         connected = false;
+        thr->stopThread();
         ui->connect_btn->setText("Connect");
     }
 }
 
 void MainWindow::updateInerface()
 {
+    if (!connected) return;
     int max, t;
     t = QString(GET_UNDERVOLT_LIMIT_F()).toDouble()*5;//psDrvPtr->GET_UNDERVOLT_LIMIT_F().toDouble()*5;
     ui->volt_dial->setMinimum(t);
@@ -100,6 +106,7 @@ void MainWindow::on_resetSettings_clicked()
 {
 //    psDrvPtr->SET_UNDERVOLT_LIMIT_F(2);
 //    psDrvPtr->RESET_PS_SETTINGS_F();
+    if (!connected) return;
     RESET_PS_SETTINGS_F();
     updateInerface();
 }
@@ -117,6 +124,8 @@ void MainWindow::checkState()
 
 void MainWindow::stateUpdated(double par1, double par2, QString par3)
 {
+    if (!connected) return;
+
     if(volt_updated)
     {
         SET_VOLT_LIMIT_F(ui->volt_output->value());
@@ -141,9 +150,11 @@ void MainWindow::on_volt_dial_valueChanged(int val)
 
 void MainWindow::on_underVolt_valueChanged(double val)
 {
+
 //    psDrvPtr->SET_UNDERVOLT_LIMIT_F(val);
     underVoltLimit = val;
-    SET_UNDERVOLT_LIMIT_F(val);
+    if (connected)
+        SET_UNDERVOLT_LIMIT_F(val);
 //    int t = qRound(val*100);
     ui->volt_dial->setMinimum(qRound(val*5));
 }
@@ -151,7 +162,8 @@ void MainWindow::on_underVolt_valueChanged(double val)
 void MainWindow::on_overVolt_valueChanged(double val)
 {
 //    psDrvPtr->SET_OVERVOLT_PROTECTION_F(val);
-    SET_OVERVOLT_PROTECTION_F(val);
+    if(connected)
+        SET_OVERVOLT_PROTECTION_F(val);
     overVoltLimit = val;
     int t = qRound(val*100);
     ui->volt_dial->setMaximum(t-qRound(val*5));
@@ -184,17 +196,21 @@ void MainWindow::on_curr_output_valueChanged(double val)
 void MainWindow::on_outputStateBtn_clicked()
 {
 //    psDrvPtr->SET_OUTPUT_STATE_F(ui->outputStateBtn->isChecked());
+    if (!connected) return;
     SET_OUTPUT_STATE_F(ui->outputStateBtn->isChecked());
+    updateInerface();
 }
 
 void MainWindow::on_oper_mode_combo_currentIndexChanged(int index)
 {
 //    psDrvPtr->SET_SETTING_MODE_F(index);
+    if(!connected) return;
     SET_SETTING_MODE_F(index);
 }
 
 void MainWindow::on_foldback_btn_clicked()
 {
+    if (!connected) return;
 //    psDrvPtr->SET_FOLDBACK_PROTECTION_F(ui->foldback_btn->isChecked());
     SET_FOLDBACK_PROTECTION_F(ui->foldback_btn->isChecked());
 }
@@ -202,5 +218,11 @@ void MainWindow::on_foldback_btn_clicked()
 void MainWindow::on_power_up_combo_currentIndexChanged(int index)
 {
 //    psDrvPtr->SET_START_MODE_F(index);
+    if(!connected) return;
     SET_START_MODE_F(index);
+}
+
+void MainWindow::connectionLost()
+{
+
 }

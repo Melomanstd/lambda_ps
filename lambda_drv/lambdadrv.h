@@ -50,7 +50,7 @@ public:
     virtual ~LambdaDrv();
     int openSocket(QString ip, QString port);
     int closeSocket();
-    void writeData(QString query);
+    int writeData(QString query);
     void readData(QByteArray &msg);
     void checkForErrors();
 
@@ -87,6 +87,7 @@ public:
     int SELF_TEST_F();
     
 signals:
+    void connectionLost();
     
 public slots:
 //    void readSomething();

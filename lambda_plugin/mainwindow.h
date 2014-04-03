@@ -24,6 +24,8 @@ public:
     ~MainWindow();
 
 public slots:
+    void connectionLost();
+
     void connectClicked();
     void updateInerface();
     void on_resetSettings_clicked();

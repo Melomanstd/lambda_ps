@@ -66,8 +66,8 @@ protected:
     int WndCount;
 
     //plugins variables
-    QString voltage, current;
-    QString underVoltLimit, overVoltLimit;
+//    QString voltage, current;
+//    QString underVoltLimit, overVoltLimit;
 };
 
 //class LAMBDA_PLUGINSHARED_EXPORT Lambda_plugin

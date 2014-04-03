@@ -11,8 +11,7 @@ int openSocket(char *ip, char *port)
 {
     if(drv) return -1;
     drv = new LambdaDrv;
-    drv->openSocket(QString(ip), QString(port));
-    return 0;
+    return drv->openSocket(QString(ip), QString(port));
 }
 
 int closeSocket()

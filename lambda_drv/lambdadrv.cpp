@@ -16,32 +16,49 @@ LambdaDrv::~LambdaDrv()
 int LambdaDrv::openSocket(QString ip, QString port)
 {
     if (tcpSocket) return -1;
-    tcpSocket = new QTcpSocket(this);
+    tcpSocket = new QTcpSocket(/*this*/NULL);
+    tcpSocket->moveToThread(QThread::currentThread());
     tcpSocket->connectToHost(QHostAddress(ip),port.toInt());
-//    connect(tcpSocket, SIGNAL(readyRead()), this, SLOT(readSomething()));
+    if(!tcpSocket->waitForConnected(3000))
+    {
+        closeSocket();
+        return -2;
+    }
+//    int ff = tcpSocket->state();
+//    while(tcpSocket->state()!=QAbstractSocket::ConnectedState)
+//    qDebug()<<"--------------------------------------------------"<<ff;
+//    connect(tcpSocket, SIGNAL(disconnected()), this, SIGNAL(connectionLost()));
     return 0;
 }
 
 int LambdaDrv::closeSocket()
 {
     if (!tcpSocket) return -1;
+//    disconnect(tcpSocket);
     tcpSocket->close();
     delete tcpSocket;
     tcpSocket = 0;
     return 0;
 }
 
-void LambdaDrv::writeData(QString query)
+int LambdaDrv::writeData(QString query)
 {
-    if (!tcpSocket || !tcpSocket->isOpen()) return;
+    if (!tcpSocket || !tcpSocket->isOpen()) return -1;
     QByteArray q = query.toAscii();
     qDebug()<<"sended: "<<QString(q);
-    tcpSocket->write(q.data());
+    quint64 res=tcpSocket->write(q.data());
+    qDebug() << res;
+    if (!tcpSocket->waitForBytesWritten(1000)) return -2;
+    return res;
 }
 
 void LambdaDrv::readData(QByteArray &msg)
 {
-    if (!tcpSocket || !tcpSocket->isOpen()) return;
+    if (!tcpSocket || !tcpSocket->isOpen())
+    {
+        msg.clear();
+        return;
+    }
 //    msg = tcpSocket->read(64);
     if(tcpSocket->waitForReadyRead(1000))
     {
