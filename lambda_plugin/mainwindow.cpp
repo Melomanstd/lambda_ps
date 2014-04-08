@@ -87,7 +87,7 @@ MainWindow::~MainWindow()
         if(thr)
         {
             thr->stopThread();
-            thr->wait(510);
+            thr->wait(1000);
             delete thr;
         }
 //    closeSocket();
