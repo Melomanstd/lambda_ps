@@ -8,6 +8,9 @@ include(lm_conf.pri)
 
 #QT       -= gui
 
-TARGET = lm_plugin
-TEMPLATE = lib
+TARGET = lambda
+TEMPLATE = app
 
+HEADERS +=
+
+SOURCES +=

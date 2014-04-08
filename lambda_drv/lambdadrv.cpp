@@ -5,6 +5,7 @@ LambdaDrv::LambdaDrv(QObject *parent) :
     QObject(parent)
 {
     tcpSocket = 0;
+    somethingSended = false;
 }
 
 LambdaDrv::~LambdaDrv()
@@ -35,7 +36,10 @@ int LambdaDrv::closeSocket()
 {
     if (!tcpSocket) return -1;
 //    disconnect(tcpSocket);
-    tcpSocket->close();
+    tcpSocket->disconnectFromHost();
+    if (tcpSocket->state() == QAbstractSocket::UnconnectedState ||
+             tcpSocket->waitForDisconnected(1000))
+             qDebug("Disconnected!");
     delete tcpSocket;
     tcpSocket = 0;
     return 0;
@@ -43,18 +47,27 @@ int LambdaDrv::closeSocket()
 
 int LambdaDrv::writeData(QString query)
 {
-    if (!tcpSocket || !tcpSocket->isOpen()) return -1;
+//    if (!tcpSocket || !tcpSocket->isOpen()) return -1;
+    if(!tcpSocket) return -1;
     QByteArray q = query.toAscii();
-    qDebug()<<"sended: "<<QString(q);
+
     quint64 res=tcpSocket->write(q.data());
+
+    if (!tcpSocket->waitForBytesWritten(1000))
+    {
+        somethingSended = false;
+        qDebug()<<"not sended";
+        return -2;
+    }
+    qDebug()<<"sended: "<<QString(q);
     qDebug() << res;
-    if (!tcpSocket->waitForBytesWritten(1000)) return -2;
+    somethingSended = true;
     return res;
 }
 
 void LambdaDrv::readData(QByteArray &msg)
 {
-    if (!tcpSocket || !tcpSocket->isOpen())
+    if (!tcpSocket/* || !tcpSocket->isOpen() ||somethingSended == false*/)
     {
         msg.clear();
         return;
@@ -63,7 +76,7 @@ void LambdaDrv::readData(QByteArray &msg)
     if(tcpSocket->waitForReadyRead(1000))
     {
         msg = tcpSocket->read(msg.size());
-//        msg.trimmed();
+        msg = msg.trimmed();
         qDebug()<<"";
     }
     else msg.clear();
@@ -335,4 +348,9 @@ int LambdaDrv::SELF_TEST_F()
 {
     writeData("*TST ?");
     return 0;
+}
+
+int LambdaDrv::sendedState()
+{
+    return somethingSended;
 }

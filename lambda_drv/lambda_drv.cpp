@@ -6,6 +6,7 @@
 //}
 
 LambdaDrv *drv = 0;
+QByteArray lastMessage;
 
 int openSocket(char *ip, char *port)
 {
@@ -29,8 +30,10 @@ char* FIRMWARE_REVISION_F()
 {
     if(!drv) return '\0';
     QString str = drv->FIRMWARE_REVISION_F();
-    QByteArray res = str.toAscii();
-    return res.data();
+//    QByteArray res = str.toAscii();
+//    lastMessage.clear();
+    lastMessage = str.toAscii();
+    return lastMessage.data();
 }
 
 int SET_VOLT_LIMIT_F(double val)
@@ -45,8 +48,8 @@ char* GET_VOLT_LIMIT_F()
 {
     if(!drv) return '\0';
     QString str = drv->GET_VOLT_LIMIT_F();
-    QByteArray res = str.toAscii();
-    return res.data();
+    /*QByteArray res*/lastMessage = str.toAscii();
+    return lastMessage.data();
 }
 
 int SET_CURR_LIMIT_F(double val)
@@ -61,8 +64,8 @@ char* GET_CURR_LIMIT_F()
 {
     if(!drv) return '\0';
     QString str = drv->GET_CURR_LIMIT_F();
-    QByteArray res = str.toAscii();
-    return res.data();
+    /*QByteArray res*/lastMessage = str.toAscii();
+    return lastMessage.data();
 }
 
 int SET_OUTPUT_STATE_F(int val)
@@ -77,32 +80,37 @@ char* GET_OUTPUT_STATE_F()
 {
     if(!drv) return '\0';
     QString str = drv->GET_OUTPUT_STATE_F();
-    QByteArray res = str.toAscii();
-    return res.data();
+
+//    lastMessage.clear();
+    lastMessage = str.toAscii();
+//    int t=sizeof(lastMessage.data());
+//    char s[t];
+//    strcpy(s, lastMessage.data());
+    return lastMessage.data();
 }
 
 char* MEAS_VOLTAGE_F()
 {
     if(!drv) return '\0';
     QString str = drv->MEAS_VOLTAGE_F();
-    QByteArray res = str.toAscii();
-    return res.data();
+    /*QByteArray res*/lastMessage = str.toAscii();
+    return lastMessage.data();
 }
 
 char* MEAS_CURRENT_F()
 {
     if(!drv) return '\0';
     QString str = drv->MEAS_CURRENT_F();
-    QByteArray res = str.toAscii();
-    return res.data();
+    /*QByteArray res*/lastMessage = str.toAscii();
+    return lastMessage.data();
 }
 
 char* READ_CONSTANT_MODE_F()
 {
     if(!drv) return '\0';
     QString str = drv->READ_CONSTANT_MODE_F();
-    QByteArray res = str.toAscii();
-    return res.data();
+    /*QByteArray res*/lastMessage = str.toAscii();
+    return lastMessage.data();
 }
 
 int SET_SETTING_MODE_F(int val)
@@ -117,8 +125,8 @@ char* GET_SETTING_MODE_F()
 {
     if(!drv) return '\0';
     QString str = drv->GET_SETTING_MODE_F();
-    QByteArray res = str.toAscii();
-    return res.data();
+    /*QByteArray res*/lastMessage = str.toAscii();
+    return lastMessage.data();
 }
 
 int SET_START_MODE_F(int val)
@@ -133,8 +141,8 @@ char* GET_START_MODE_F()
 {
     if(!drv) return '\0';
     QString str = drv->GET_START_MODE_F();
-    QByteArray res = str.toAscii();
-    return res.data();
+    /*QByteArray res*/lastMessage = str.toAscii();
+    return lastMessage.data();
 }
 
 
@@ -150,16 +158,16 @@ char* GET_OVERVOLT_PROTECTION_F()
 {
     if(!drv) return '\0';
     QString str = drv->GET_OVERVOLT_PROTECTION_F();
-    QByteArray res = str.toAscii();
-    return res.data();
+    /*QByteArray res*/lastMessage = str.toAscii();
+    return lastMessage.data();
 }
 
 char* READ_OVERVOLT_TRIPPED_F()
 {
     if(!drv) return '\0';
     QString str = drv->READ_OVERVOLT_TRIPPED_F();
-    QByteArray res = str.toAscii();
-    return res.data();
+    /*QByteArray res*/lastMessage = str.toAscii();
+    return lastMessage.data();
 }
 
 int SET_UNDERVOLT_LIMIT_F(double val)
@@ -174,8 +182,8 @@ char* GET_UNDERVOLT_LIMIT_F()
 {
     if(!drv) return '\0';
     QString str = drv->GET_UNDERVOLT_LIMIT_F();
-    QByteArray res = str.toAscii();
-    return res.data();
+    /*QByteArray res*/lastMessage = str.toAscii();
+    return lastMessage.data();
 }
 
 int SET_FOLDBACK_PROTECTION_F(int val)
@@ -190,16 +198,16 @@ char* GET_FOLDBACK_PROTECTION_F()
 {
     if(!drv) return '\0';
     QString str = drv->GET_FOLDBACK_PROTECTION_F();
-    QByteArray res = str.toAscii();
-    return res.data();
+    /*QByteArray res*/lastMessage = str.toAscii();
+    return lastMessage.data();
 }
 
 char* READ_FOLDBACK_TRIPPED_F()
 {
     if(!drv) return '\0';
     QString str = drv->READ_FOLDBACK_TRIPPED_F();
-    QByteArray res = str.toAscii();
-    return res.data();
+    /*QByteArray res*/lastMessage = str.toAscii();
+    return lastMessage.data();
 }
 
 int SET_LAN_LED_STATE_F(int val)
@@ -214,24 +222,24 @@ char* READ_HOSTNAME_F()
 {
     if(!drv) return '\0';
     QString str = drv->READ_HOSTNAME_F();
-    QByteArray res = str.toAscii();
-    return res.data();
+    /*QByteArray res*/lastMessage = str.toAscii();
+    return lastMessage.data();
 }
 
 char* READ_IP_ADDRESS_F()
 {
     if(!drv) return '\0';
     QString str = drv->READ_IP_ADDRESS_F();
-    QByteArray res = str.toAscii();
-    return res.data();
+    /*QByteArray res*/lastMessage = str.toAscii();
+    return lastMessage.data();
 }
 
 char* READ_MAC_ADDRESS_F()
 {
     if(!drv) return '\0';
     QString str = drv->READ_MAC_ADDRESS_F();
-    QByteArray res = str.toAscii();
-    return res.data();
+    /*QByteArray res*/lastMessage = str.toAscii();
+    return lastMessage.data();
 }
 
 int RESET_LAN_SETTINGS_F()
@@ -269,4 +277,10 @@ int SELF_TEST_F()
     if(!drv) return -1;
 //    writeData("*TST ?");
     return drv->SELF_TEST_F();
+}
+
+int sendedState()
+{
+    if(!drv) return -1;
+    return drv->sendedState();
 }

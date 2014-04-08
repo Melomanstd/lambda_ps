@@ -10,6 +10,7 @@
 //#include "lambdadrv.h"
 //#include "lambda_drv.h"
 #include "thread.h"
+#include "corethread.h"
 
 namespace Ui {
 class MainWindow;
@@ -20,16 +21,27 @@ class MainWindow : public QMainWindow
     Q_OBJECT
     
 public:
-    explicit MainWindow(QWidget *parent = 0);
+    explicit MainWindow(CoreThread *core=0, bool limFunc = false, QWidget *parent = 0);
     ~MainWindow();
 
 public slots:
+    void testSlot();
+
     void connectionLost();
+    void startConnection(bool state);
+
+    void blockUI(bool s);
 
     void connectClicked();
     void updateInerface();
     void on_resetSettings_clicked();
     void checkState();
+    void checkOutputState(QueueItem &item);
+    void checkFoldbackState(QueueItem &item);
+    void checkStartMode(QueueItem &item);
+    void checkOperationMode(QueueItem &item);
+    void checkOverVolt(QueueItem &item);
+    void checkUnderVolt(QueueItem &item);
     void stateUpdated(double par1, double par2, QString par3);
 
     void on_volt_dial_valueChanged(int val);
@@ -55,10 +67,12 @@ public:
 private:
     Ui::MainWindow *ui;
     QTimer checkTimer;
-    Thread *thr;
+    CoreThread/*Thread*/ *thr;
     bool connected;
     bool volt_updated;
     bool curr_updated;
+    QWaitCondition m_wait;
+    QMutex mutex;
 
 
 

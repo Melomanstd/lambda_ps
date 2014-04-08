@@ -53,6 +53,7 @@ public:
     int writeData(QString query);
     void readData(QByteArray &msg);
     void checkForErrors();
+    int sendedState();
 
     QString FIRMWARE_REVISION_F();
     int SET_VOLT_LIMIT_F(double val);
@@ -94,6 +95,7 @@ public slots:
 
 protected:
     QTcpSocket *tcpSocket;
+    bool somethingSended;
 };
 
 #endif // LABMDADRV_H

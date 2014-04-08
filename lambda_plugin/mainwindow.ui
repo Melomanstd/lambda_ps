@@ -183,7 +183,7 @@
               </layout>
              </item>
              <item>
-              <widget class="QDial" name="volt_dial">
+              <widget class="timerDial" name="volt_dial">
                <property name="minimumSize">
                 <size>
                  <width>0</width>
@@ -262,7 +262,11 @@
                </widget>
               </item>
               <item>
-               <widget class="QComboBox" name="oper_mode_combo"/>
+               <widget class="QComboBox" name="oper_mode_combo">
+                <property name="currentIndex">
+                 <number>-1</number>
+                </property>
+               </widget>
               </item>
              </layout>
             </item>
@@ -435,7 +439,7 @@
               <number>5</number>
              </property>
              <item>
-              <widget class="QDial" name="curr_dial">
+              <widget class="timerDial" name="curr_dial">
                <property name="minimumSize">
                 <size>
                  <width>0</width>
@@ -890,6 +894,13 @@
       </property>
      </spacer>
     </item>
+    <item>
+     <widget class="QPushButton" name="pushButton">
+      <property name="text">
+       <string>PushButton</string>
+      </property>
+     </widget>
+    </item>
    </layout>
   </widget>
   <widget class="QMenuBar" name="menuBar">
@@ -913,6 +924,13 @@
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>timerDial</class>
+   <extends>QDial</extends>
+   <header>timerdial.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

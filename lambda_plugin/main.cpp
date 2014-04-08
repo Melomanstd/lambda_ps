@@ -4,7 +4,11 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    MainWindow w;
+
+//    pCore=new Core()
+    CoreThread *pCore = new CoreThread;
+
+    MainWindow w(pCore);
     w.show();
     
     return a.exec();

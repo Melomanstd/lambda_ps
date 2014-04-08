@@ -15,18 +15,18 @@ QWidget* createMainWindow()
 ///-------------------------------------
 LambdaWindow::LambdaWindow()
 {
-    QTextCodec::setCodecForCStrings(QTextCodec::codecForName("utf-8"));
+//    QTextCodec::setCodecForCStrings(QTextCodec::codecForName("utf-8"));
 
-    varCount = 4;
+//    varCount = 4;
     lmWin = 0;
-    classNum = 1;
-    drvNum = 1;
-    DrvName = "LambdaDrv";
-    ClassName = "lambda_plugin";
-    DrvAnnotation = "Lambda power supply driver";
-    DrvVersion = "0.000001";
-    CommandsCount = 12;
-    WndCount = 1;
+//    classNum = 1;
+//    drvNum = 1;
+//    DrvName = "LambdaDrv";
+//    ClassName = "lambda_plugin";
+//    DrvAnnotation = "Lambda power supply driver";
+//    DrvVersion = "0.000001";
+//    CommandsCount = 12;
+//    WndCount = 1;
 }
 
 void LambdaWindow::createWindow()
@@ -38,22 +38,46 @@ void LambdaWindow::createWindow()
 void LambdaWindow::destroyWindow()
 {
     if (!lmWin) return;
+    closeSocket();
     delete lmWin;
     lmWin = 0;
 }
 
 QWidget* LambdaWindow::getMainWindow()
 {
-    return lmWin;
+    return 0;//lmWin;
 }
 
 QTranslator* LambdaWindow::getTranslator()
 {
-    return &lmWin->translator;
+    return 0;//&lmWin->translator;
 }
 
 //--------------------------------------------------
-int LambdaWindow::getInfo(DrvInfo *pDrvInfo)
+
+
+//--------------------------------------------------
+LambdaPlugin::LambdaPlugin()
+{
+    QTextCodec::setCodecForCStrings(QTextCodec::codecForName("utf-8"));
+
+    varCount = 4;
+    lmWin = 0;
+    core = 0;
+    classNum = 1;
+    drvNum = 1;
+    DrvName = "LambdaDrv";
+    ClassName = "lambda_plugin";
+    DrvAnnotation = "Lambda power supply driver";
+    DrvVersion = "0.000001";
+    CommandsCount = 12;
+    WndCount = 1;
+}
+
+LambdaPlugin::~LambdaPlugin()
+{}
+
+int LambdaPlugin::getInfo(DrvInfo *pDrvInfo)
 {
     pDrvInfo->Number = drvNum;
     pDrvInfo->Class = classNum;
@@ -71,12 +95,12 @@ int LambdaWindow::getInfo(DrvInfo *pDrvInfo)
     return 0;
 }
 
-int LambdaWindow::getWndInfo(int nWnd, DrvWndInfo *pWndInfo)
+int LambdaPlugin::getWndInfo(int nWnd, DrvWndInfo *pWndInfo)
 {
-    if (!lmWin) return -1;
+//    if (!lmWin) return -1;
     if (nWnd >= WndCount || nWnd < 0) return -1;
     pWndInfo->wnd = (void*) lmWin;
-    pWndInfo->name = lmWin->objectName();
+    pWndInfo->name = "LambdaWindow";//lmWin->objectName();
     pWndInfo->bShowForAdmin = true;
     pWndInfo->bShowForProgrammer = true;
     pWndInfo->bShowForUser = true;
@@ -85,7 +109,7 @@ int LambdaWindow::getWndInfo(int nWnd, DrvWndInfo *pWndInfo)
     return 0;
 }
 
-int LambdaWindow::getCommandInfo(int nCommand, DrvCommandInfo *pCommandInfo)
+int LambdaPlugin::getCommandInfo(int nCommand, DrvCommandInfo *pCommandInfo)
 {
     if(nCommand >= CommandsCount || nCommand < 0) return -1;
     switch(nCommand)
@@ -154,7 +178,7 @@ int LambdaWindow::getCommandInfo(int nCommand, DrvCommandInfo *pCommandInfo)
     return 0;
 }
 
-int LambdaWindow::getCommandParamInfo(int nCommand, int nParam,
+int LambdaPlugin::getCommandParamInfo(int nCommand, int nParam,
                                       DrvCommandParamInfo *pCommandParamInfo)
 {
     if (nCommand >= CommandsCount || nCommand < 0) return -1;
@@ -220,31 +244,39 @@ int LambdaWindow::getCommandParamInfo(int nCommand, int nParam,
     return 0;
 }
 
-int LambdaWindow::drvOpen()
+int LambdaPlugin::drvOpen()
 {
+
 //    createWindow();
 //    openSocket("192.168.1.103", "8003");
 //    SET_OUTPUT_STATE_F(1);
+    if(core) return -1;
+    core = new CoreThread;
     return 0;
 }
 
-int LambdaWindow::drvClose()
+int LambdaPlugin::drvClose()
 {
-    closeSocket();
-    destroyWindow();
+//    closeSocket();
+//    destroyWindow();
+    if (!core) return -1;
+    core->stopThread();
+    core->wait(1000);
+    delete core;
+    core = 0;
     return 0;
 }
 
-QStringList LambdaWindow::commands() const
+QStringList LambdaPlugin::commands() const
 {return QStringList();}
 
-QStringList LambdaWindow::variables() const
+QStringList LambdaPlugin::variables() const
 {return QStringList();}
 
-int LambdaWindow::getDOInfo(int nVar, DrvVariableInfo *pDataVariable)
+int LambdaPlugin::getDOInfo(int nVar, DrvVariableInfo *pDataVariable)
 {return 0;}
 
-int LambdaWindow::getDRInfo(int nVar, DrvVariableInfo *pDataVariable)
+int LambdaPlugin::getDRInfo(int nVar, DrvVariableInfo *pDataVariable)
 {
     if (nVar < 0 || nVar >= varCount) return -1;
     if (!lmWin) return -1;
@@ -255,41 +287,41 @@ int LambdaWindow::getDRInfo(int nVar, DrvVariableInfo *pDataVariable)
         pDataVariable->Annotation = "Текущее напряжение";
         pDataVariable->Type = TYPE_DOUBLE;
         pDataVariable->ED = "Вольт";
-        pDataVariable->pValue = (void*) &lmWin->voltage;
+        pDataVariable->pValue = (void*) &core->voltage;
         break;
     case 1:
         pDataVariable->Name = "curr";
         pDataVariable->Annotation = "Текущая сила тока";
         pDataVariable->Type = TYPE_DOUBLE;
         pDataVariable->ED = "Ампер";
-        pDataVariable->pValue = (void*) &lmWin->current;
+        pDataVariable->pValue = (void*) &core->current;
         break;
     case 2:
-        pDataVariable->Name = "minVolt";
+        pDataVariable->Name = "uVolt";
         pDataVariable->Annotation = "Мин. Напряжение";
         pDataVariable->Type = TYPE_DOUBLE;
         pDataVariable->ED = "Вольт";
-        pDataVariable->pValue = (void*) &lmWin->underVoltLimit;
+        pDataVariable->pValue = (void*) &core->uVolt;
         break;
     case 3:
-        pDataVariable->Name = "maxVolt";
+        pDataVariable->Name = "oVolt";
         pDataVariable->Annotation = "Макс. Напряжение";
         pDataVariable->Type = TYPE_DOUBLE;
         pDataVariable->ED = "Вольт";
-        pDataVariable->pValue = (void*) &lmWin->overVoltLimit;
+        pDataVariable->pValue = (void*) &core->oVolt;
         break;
     }
 
     return 0;
 }
 
-int LambdaWindow::makeCommand(int nCommand,
+int LambdaPlugin::makeCommand(int nCommand,
                               QByteArray &pData,
                               int nActiveObject,
                               PasportSaveValMgr *pArrayPasportSaveVal)
 {
     if (nCommand < 0 || nCommand >= CommandsCount) return -1;
-    openSocket("192.168.1.103", "8003");
+//    openSocket("192.168.1.103", "8003");
     QDataStream data(pData);
     qreal t1=0;
     quint8 t2 = 0;
@@ -359,20 +391,45 @@ int LambdaWindow::makeCommand(int nCommand,
         break;
     }
 
-    closeSocket();
+//    closeSocket();
     return 0;
 }
 
-int LambdaWindow::drvInit(DrvInitInfo *pDrvInitInfo)
-{return 0;}
+int LambdaPlugin::drvInit(DrvInitInfo *pDrvInitInfo)
+{
+    if (!lmWin || !core) return -1;
+    lmWin->setEnabled(false);
+    core->start();
+    return 0;
+}
 
-int LambdaWindow::drvSuspend()
-{return 0;}
+int LambdaPlugin::drvSuspend()
+{
+    if(!lmWin || !core) return -1;
+    lmWin->setEnabled(true);
+    core->stopThread();
+    return 0;
+}
 
-QString LambdaWindow::getErrorStr(int nErrorCode)
+QString LambdaPlugin::getErrorStr(int nErrorCode)
 {
     return "none";
 }
 
+int LambdaPlugin::createWnd(int nWnd)
+{
+//    DrvWndInfo temp;
+//    getWndInfo(nWnd,&temp);
+    if (lmWin || !core) return -1;
+    if (nWnd<0 || nWnd > WndCount) return -2;
+    switch (nWnd)
+    {
+    case 0:
+        lmWin = new MainWindow(core);
+        lmWin->hide();
+        break;
+    }
+}
+
 //--------------------------------------------------
-Q_EXPORT_PLUGIN2(LambdaLib, LambdaWindow)
+Q_EXPORT_PLUGIN2(LambdaLib, LambdaPlugin)
