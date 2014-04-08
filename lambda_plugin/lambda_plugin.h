@@ -69,7 +69,7 @@ public:
     int getWndInfo(int nWnd, DrvWndInfo *pWndInfo);
     int getCommandInfo(int nCommand, DrvCommandInfo *pCommandInfo);
     int getCommandParamInfo(int nCommand, int nParam, DrvCommandParamInfo *pCommandParamInfo);
-    int drvOpen();
+    int drvOpen(QString strAddr);
     int drvClose();
     QStringList commands() const;
     QStringList variables() const;

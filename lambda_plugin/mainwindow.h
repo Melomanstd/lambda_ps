@@ -73,6 +73,7 @@ private:
     bool curr_updated;
     QWaitCondition m_wait;
     QMutex mutex;
+    bool limFunc;
 
 
 

@@ -115,7 +115,7 @@ int LambdaPlugin::getCommandInfo(int nCommand, DrvCommandInfo *pCommandInfo)
     switch(nCommand)
     {
     case 0:
-        pCommandInfo->Name = "Запрос режима вывода";//"READ_CONSTANT_MODE_F";
+        pCommandInfo->Name = "Режима вывода";//"READ_CONSTANT_MODE_F";
         pCommandInfo->Annotation = "Получение режима вывода (Вольт / Ампер / Выкл)";
         pCommandInfo->NumParam = 0;
         break;
@@ -140,17 +140,17 @@ int LambdaPlugin::getCommandInfo(int nCommand, DrvCommandInfo *pCommandInfo)
         pCommandInfo->NumParam = 1;
         break;
     case 5:
-        pCommandInfo->Name = "Управление состоянием вывода";//"SET_OUTPUT_STATE_F";
+        pCommandInfo->Name = "Состоянием вывода";//"SET_OUTPUT_STATE_F";
         pCommandInfo->Annotation = "Вкл / выкл вывод данных";
         pCommandInfo->NumParam = 1;
         break;
     case 6:
-        pCommandInfo->Name = "Установка типа управления";//"SET_SETTING_MODE_F";
+        pCommandInfo->Name = "Установить тип управления";//"SET_SETTING_MODE_F";
         pCommandInfo->Annotation = "Локальное / Удаленное / Удаленное без отображения статуса на панели устройства";
         pCommandInfo->NumParam = 1;
         break;
     case 7:
-        pCommandInfo->Name = "Установка режима запуска";//"SET_START_MODE_F";
+        pCommandInfo->Name = "Установить режим запуска";//"SET_START_MODE_F";
         pCommandInfo->Annotation = "Безопасный старт / Авто перезагрузка";
         pCommandInfo->NumParam = 1;
         break;
@@ -170,7 +170,7 @@ int LambdaPlugin::getCommandInfo(int nCommand, DrvCommandInfo *pCommandInfo)
         pCommandInfo->NumParam = 1;
         break;
     case 11:
-        pCommandInfo->Name = "Установить настройки по умолчанию";//"RESET_PS_SETTINGS_F";
+        pCommandInfo->Name = "Сброс";//"RESET_PS_SETTINGS_F";
         pCommandInfo->Annotation = "Установить настройки по умолчанию";
         pCommandInfo->NumParam = 0;
         break;
@@ -208,7 +208,7 @@ int LambdaPlugin::getCommandParamInfo(int nCommand, int nParam,
     case 5:
     case 10:
         pCommandParamInfo->Name = "Статус";
-        pCommandParamInfo->Annotation = "ВКЛ\nВЫКЛ\n";
+        pCommandParamInfo->Annotation = "ВЫКЛ\nВКЛ\n";
         pCommandParamInfo->Type = TYPE_ENUM;
         pCommandParamInfo->LRange = 0;
         pCommandParamInfo->RRange = 0;
@@ -244,14 +244,20 @@ int LambdaPlugin::getCommandParamInfo(int nCommand, int nParam,
     return 0;
 }
 
-int LambdaPlugin::drvOpen()
+int LambdaPlugin::drvOpen(QString strAddr)
 {
 
 //    createWindow();
 //    openSocket("192.168.1.103", "8003");
 //    SET_OUTPUT_STATE_F(1);
     if(core) return -1;
+    QStringList address = strAddr.split("::");
+    if (address.size()!=4) return -3;
     core = new CoreThread;
+    core->startThread(address.at(1), address.at(2));
+
+
+//    core->start();
     return 0;
 }
 
@@ -399,7 +405,8 @@ int LambdaPlugin::drvInit(DrvInitInfo *pDrvInitInfo)
 {
     if (!lmWin || !core) return -1;
     lmWin->setEnabled(false);
-    core->start();
+    RESET_PS_SETTINGS_F();
+//    core->start();
     return 0;
 }
 
@@ -407,7 +414,8 @@ int LambdaPlugin::drvSuspend()
 {
     if(!lmWin || !core) return -1;
     lmWin->setEnabled(true);
-    core->stopThread();
+    RESET_PS_SETTINGS_F();
+//    core->stopThread();
     return 0;
 }
 
@@ -420,15 +428,17 @@ int LambdaPlugin::createWnd(int nWnd)
 {
 //    DrvWndInfo temp;
 //    getWndInfo(nWnd,&temp);
+//    return -1;
     if (lmWin || !core) return -1;
     if (nWnd<0 || nWnd > WndCount) return -2;
     switch (nWnd)
     {
     case 0:
-        lmWin = new MainWindow(core);
+        lmWin = new MainWindow(core, true);
         lmWin->hide();
         break;
     }
+    return 0;
 }
 
 //--------------------------------------------------

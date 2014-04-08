@@ -17,7 +17,14 @@ MainWindow::MainWindow(CoreThread *core, bool limFunc, QWidget *parent) :
     ui->label_4->setVisible(false);
     ui->const_mode_lbl->setVisible(false);
 
-    blockUI(true);
+    this->limFunc = limFunc;
+    if(!limFunc)
+        blockUI(true);
+    else
+    {
+        ui->ip_edit->setEnabled(false);
+        ui->connect_btn->setEnabled(false);
+    }
 //    setEnabled(false);
 
     volt_updated = false;
@@ -76,12 +83,13 @@ MainWindow::MainWindow(CoreThread *core, bool limFunc, QWidget *parent) :
 MainWindow::~MainWindow()
 {   
 //    psDrvPtr->closeSocket();
-    if(thr)
-    {
-        thr->stopThread();
-        thr->wait(510);
-        delete thr;
-    }
+    if (!limFunc)
+        if(thr)
+        {
+            thr->stopThread();
+            thr->wait(510);
+            delete thr;
+        }
 //    closeSocket();
     delete ui;
 }
@@ -424,7 +432,8 @@ void MainWindow::connectionLost()
     checkTimer.stop();
     thr->stopThread();
 //    closeSocket();
-    blockUI(true);
+    if (!limFunc)
+        blockUI(true);
     connected = false;
     ui->connect_btn->setText("Connect");
 }
@@ -435,7 +444,8 @@ void MainWindow::startConnection(bool state)
     if (!state) return;
     connected = true;
 //    checkState();
-    blockUI(false);
+    if (!limFunc)
+        blockUI(false);
     checkTimer.start(500);
     updateInerface();
 
