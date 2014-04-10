@@ -81,6 +81,8 @@ public:
     QString getErrorStr(int nErrorCode);
     int createWnd(int nWnd);
 
+    int startConndection();
+
 protected:
     int classNum;
     int drvNum;

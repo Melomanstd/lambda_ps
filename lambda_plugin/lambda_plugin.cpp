@@ -174,6 +174,11 @@ int LambdaPlugin::getCommandInfo(int nCommand, DrvCommandInfo *pCommandInfo)
         pCommandInfo->Annotation = "Установить настройки по умолчанию";
         pCommandInfo->NumParam = 0;
         break;
+    case 12:
+        pCommandInfo->Name = "Установить соеденение";//"RESET_PS_SETTINGS_F";
+        pCommandInfo->Annotation = "Установить соеденение с источником питания";
+        pCommandInfo->NumParam = 0;
+        break;
     }
     return 0;
 }
@@ -395,6 +400,9 @@ int LambdaPlugin::makeCommand(int nCommand,
     case 11:
         RESET_PS_SETTINGS_F();
         break;
+    case 12:
+        startConndection();
+        break;
     }
 
 //    closeSocket();
@@ -438,6 +446,14 @@ int LambdaPlugin::createWnd(int nWnd)
         lmWin->hide();
         break;
     }
+    return 0;
+}
+
+int LambdaPlugin::startConndection()
+{
+    if (!core) return -1;
+    if (core->isRunning()) return -2;
+    core->start();
     return 0;
 }
 

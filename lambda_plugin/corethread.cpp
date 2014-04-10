@@ -20,17 +20,17 @@ void CoreThread::run()
     QString s;
     QByteArray i;
     QByteArray p;
-    if(startedFromGUI)
+//    if(startedFromGUI)
     {
         i = ip.toAscii();
         p = port.toAscii();
     }
-    else
-    {
-        QSettings s("lambdaconf.ini", QSettings::IniFormat);
-        i = s.value("lambda/ip").toByteArray();
-        p = "8003";
-    }
+//    else
+//    {
+//        QSettings s("lambdaconf.ini", QSettings::IniFormat);
+//        i = s.value("lambda/ip").toByteArray();
+//        p = "8003";
+//    }
 
     if (openSocket(i.data(), p.data()))
         bStop = true;
