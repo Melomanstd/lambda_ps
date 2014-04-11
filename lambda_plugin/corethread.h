@@ -35,6 +35,7 @@ public slots:
 public:
     double voltage, current;
     double uVolt, oVolt;
+    bool connected;
     
 protected:
     bool bStop;

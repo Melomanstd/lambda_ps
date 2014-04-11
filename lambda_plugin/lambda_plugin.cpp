@@ -449,6 +449,12 @@ int LambdaPlugin::createWnd(int nWnd)
     return 0;
 }
 
+int LambdaPlugin::getCoreStatus()
+{
+    if(!core) return -1;
+    return !core->connected;
+}
+
 int LambdaPlugin::startConndection()
 {
     if (!core) return -1;

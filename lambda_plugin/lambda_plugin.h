@@ -80,6 +80,7 @@ public:
     int drvSuspend();
     QString getErrorStr(int nErrorCode);
     int createWnd(int nWnd);
+    int getCoreStatus();
 
     int startConndection();
 

@@ -8,6 +8,7 @@ CoreThread::CoreThread(QObject *parent) :
     voltage=0;
     current=0;
     startedFromGUI=false;
+    connected = false;
 }
 
 CoreThread::~CoreThread()
@@ -36,11 +37,13 @@ void CoreThread::run()
         bStop = true;
     else bStop = false;
     emit socketState(!bStop);
+    connected = !bStop;
     while (!bStop)
     {
         s = FIRMWARE_REVISION_F();
         if(!s.contains("LAMBDA"))
         {
+            connected = false;
             emit connectionLost();
             break;
         }
