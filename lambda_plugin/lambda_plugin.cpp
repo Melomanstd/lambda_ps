@@ -257,8 +257,8 @@ int LambdaPlugin::drvOpen(QString strAddr)
 //    SET_OUTPUT_STATE_F(1);
     if(core) return -1;
     QStringList address = strAddr.split("::");
-    if (address.size()!=4) return -3;
     core = new CoreThread;
+    if (address.size()!=4) return -3;
     core->startThread(address.at(1), address.at(2));
 
 
@@ -290,39 +290,38 @@ int LambdaPlugin::getDOInfo(int nVar, DrvVariableInfo *pDataVariable)
 int LambdaPlugin::getDRInfo(int nVar, DrvVariableInfo *pDataVariable)
 {
     if (nVar < 0 || nVar >= varCount) return -1;
-    if (!lmWin) return -1;
+//    if (!core) return -1;
     switch(nVar)
     {
     case 0:
-        pDataVariable->Name = "volt";
+        pDataVariable->Name = "U";
         pDataVariable->Annotation = "Текущее напряжение";
         pDataVariable->Type = TYPE_DOUBLE;
-        pDataVariable->ED = "Вольт";
+        pDataVariable->ED = "В";
         pDataVariable->pValue = (void*) &core->voltage;
         break;
     case 1:
-        pDataVariable->Name = "curr";
+        pDataVariable->Name = "I";
         pDataVariable->Annotation = "Текущая сила тока";
         pDataVariable->Type = TYPE_DOUBLE;
-        pDataVariable->ED = "Ампер";
+        pDataVariable->ED = "А";
         pDataVariable->pValue = (void*) &core->current;
         break;
     case 2:
-        pDataVariable->Name = "uVolt";
+        pDataVariable->Name = "Umin";
         pDataVariable->Annotation = "Мин. Напряжение";
         pDataVariable->Type = TYPE_DOUBLE;
-        pDataVariable->ED = "Вольт";
+        pDataVariable->ED = "В";
         pDataVariable->pValue = (void*) &core->uVolt;
         break;
     case 3:
-        pDataVariable->Name = "oVolt";
+        pDataVariable->Name = "Umax";
         pDataVariable->Annotation = "Макс. Напряжение";
         pDataVariable->Type = TYPE_DOUBLE;
-        pDataVariable->ED = "Вольт";
+        pDataVariable->ED = "В";
         pDataVariable->pValue = (void*) &core->oVolt;
         break;
     }
-
     return 0;
 }
 

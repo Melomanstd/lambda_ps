@@ -11,7 +11,9 @@ MainWindow::MainWindow(CoreThread *core, bool limFunc, QWidget *parent) :
     QTextCodec::setCodecForCStrings(QTextCodec::codecForName("utf8"));
     QTextCodec::setCodecForTr(QTextCodec::codecForName("utf8"));
 
-    setWindowTitle("Lambda Power Supply");
+//    setWindowTitle("Lambda Power Supply");
+
+
 
     ui->pushButton->setVisible(false);
     ui->label_4->setVisible(false);
@@ -64,6 +66,14 @@ MainWindow::MainWindow(CoreThread *core, bool limFunc, QWidget *parent) :
 //    psDrvPtr->MEAS_CURRENT_F();
 //    psDrvPtr->GET_START_MODE_F();
 //    updateInerface();
+
+    QString dir = QCoreApplication::applicationDirPath();
+    dir.append("/project_lambda_ru.qm");
+    //    b = translator.load("C:/Projects/GeneratorLib/GeneratorPlug/project_ru.qm");
+       bool b = translator.load(dir);
+        QCoreApplication::installTranslator(&translator);
+    //    a.installTranslator(&translator);
+        ui->retranslateUi(this);
 
     thr = core;//new Thread;
 //    checkTimer.start(500);
@@ -435,7 +445,7 @@ void MainWindow::connectionLost()
     if (!limFunc)
         blockUI(true);
     connected = false;
-    ui->connect_btn->setText("Connect");
+    ui->connect_btn->setText(tr("Connect"));
 }
 
 void MainWindow::startConnection(bool state)
@@ -449,7 +459,7 @@ void MainWindow::startConnection(bool state)
     checkTimer.start(500);
     updateInerface();
 
-    ui->connect_btn->setText("Disconnect");
+    ui->connect_btn->setText(tr("Disconnect"));
 }
 
 void MainWindow::testSlot()

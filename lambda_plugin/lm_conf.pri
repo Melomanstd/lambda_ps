@@ -43,5 +43,7 @@ unix:!symbian {
     INSTALLS += target
 }
 
+TRANSLATIONS = project_lambda_ru.ts
+
 FORMS += \
     mainwindow.ui
