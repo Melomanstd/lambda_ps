@@ -100,7 +100,7 @@ int LambdaPlugin::getWndInfo(int nWnd, DrvWndInfo *pWndInfo)
 //    if (!lmWin) return -1;
     if (nWnd >= WndCount || nWnd < 0) return -1;
     pWndInfo->wnd = (void*) lmWin;
-    pWndInfo->name = "LambdaWindow";//lmWin->objectName();
+    pWndInfo->name = tr("LambdaWindow");//lmWin->objectName();
     pWndInfo->bShowForAdmin = true;
     pWndInfo->bShowForProgrammer = true;
     pWndInfo->bShowForUser = true;
