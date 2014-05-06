@@ -13,6 +13,13 @@ MainWindow::MainWindow(CoreThread *core, bool limFunc, QWidget *parent) :
 
 //    setWindowTitle("Lambda Power Supply");
 
+    QString style="QPushButton{background-image: url(:/new/prefix1/img/status_green.png);} ";
+//    style.append("QGroupBox QPushButton:checked{background-image: url(:/new/img/img/outputON.png);} ");
+//style.append("groupBox_2 QLabel:disabled:checked{background-image: url(:/new/img/img/outputON.png);} ");
+    style.append("QPushButton:flat{border: none;} ");
+    style.append("QPushButton:disabled{background-image: url(:/new/prefix1/img/status_red.png);} ");
+//    setStyleSheet(style);
+    ui->status->setStyleSheet(style);
 
 
     ui->pushButton->setVisible(false);
@@ -445,6 +452,7 @@ void MainWindow::connectionLost()
     if (!limFunc)
         blockUI(true);
     connected = false;
+    ui->status->setEnabled(false);
     ui->connect_btn->setText(tr("Connect"));
 }
 
@@ -460,6 +468,7 @@ void MainWindow::startConnection(bool state)
     updateInerface();
 
     ui->connect_btn->setText(tr("Disconnect"));
+    ui->status->setEnabled(true);
 }
 
 void MainWindow::testSlot()

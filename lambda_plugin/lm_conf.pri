@@ -47,3 +47,6 @@ TRANSLATIONS = project_lambda_ru.ts
 
 FORMS += \
     mainwindow.ui
+
+RESOURCES += \
+    res.qrc
