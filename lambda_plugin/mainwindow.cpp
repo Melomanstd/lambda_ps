@@ -27,9 +27,8 @@ MainWindow::MainWindow(CoreThread *core, bool limFunc, QWidget *parent) :
     ui->const_mode_lbl->setVisible(false);
 
     this->limFunc = limFunc;
-    if(!limFunc)
-        blockUI(true);
-    else
+    blockUI(true);
+    if(limFunc)
     {
         ui->ip_edit->setEnabled(false);
         ui->connect_btn->setEnabled(false);
