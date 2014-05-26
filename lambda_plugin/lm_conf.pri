@@ -1,6 +1,6 @@
 
 QT       += network
-INCLUDEPATH += ../../PluginTest/TestPlugin
+INCLUDEPATH += ../../plugintest/TestPlugin
 #message(libsometing+aaa)
 CONFIG(debug, debug|release) {
         #DESTDIR = $$quote($${PROJECT_PATH}/../../pluginsProject)
