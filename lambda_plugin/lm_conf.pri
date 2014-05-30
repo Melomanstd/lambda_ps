@@ -6,11 +6,11 @@ CONFIG(debug, debug|release) {
         #DESTDIR = $$quote($${PROJECT_PATH}/../../pluginsProject)
         #LIBS += $$quote($${PROJECT_PATH}/../../pluginsProject/liblibgndrv.a)
         DESTDIR = ../../bin
-        LIBS += ../../bin/liblm_drv.a
+        LIBS += -L ../../bin/ -llm_drv
         #DEFINES += QT_NO_DEBUG_OUTPUT
 }else{
         DESTDIR = ../../bin/Release
-        LIBS += ../../bin/Release/liblm_drv.a
+        LIBS += -L ../../bin/Release -llm_drv#../../bin/Release/liblm_drv.a
         #DESTDIR = $$quote($${PROJECT_PATH}/../../pluginsProject/Release)
         #LIBS += $$quote($${PROJECT_PATH}/../../pluginsProject/Release/liblibgndrv.a)
         #DEFINES += QT_NO_DEBUG_OUTPUT

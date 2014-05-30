@@ -115,68 +115,68 @@ int LambdaPlugin::getCommandInfo(int nCommand, DrvCommandInfo *pCommandInfo)
     switch(nCommand)
     {
     case 0:
-        pCommandInfo->Name = "Режима вывода";//"READ_CONSTANT_MODE_F";
-        pCommandInfo->Annotation = "Получение режима вывода (Вольт / Ампер / Выкл)";
+        pCommandInfo->Name = tr("Output mode");//"Режима вывода";//"READ_CONSTANT_MODE_F";
+        pCommandInfo->Annotation = tr("Output mode a");//"Получение режима вывода (Вольт / Ампер / Выкл)";
         pCommandInfo->NumParam = 0;
         break;
     case 1:
-        pCommandInfo->Name = "Измерить напряжение";//"MEAS_VOLTAGE_F";
-        pCommandInfo->Annotation = "Запрос текущего напряжения";
+        pCommandInfo->Name = tr("Meas Voltage");//"Измерить напряжение";//"MEAS_VOLTAGE_F";
+        pCommandInfo->Annotation = tr("Meas Voltage a");//"Запрос текущего напряжения";
         pCommandInfo->NumParam = 0;
         break;
     case 2:
-        pCommandInfo->Name = "Измерить ток";//"MEAS_CURRENT_F";
-        pCommandInfo->Annotation = "Запрос текущей силы тока";
+        pCommandInfo->Name = tr("Meas Current");//"Измерить ток";//"MEAS_CURRENT_F";
+        pCommandInfo->Annotation = tr("Meas Current a");//"Запрос текущей силы тока";
         pCommandInfo->NumParam = 0;
         break;
     case 3:
-        pCommandInfo->Name = "Установить напряжение";//"SET_VOLT_LIMIT_F";
-        pCommandInfo->Annotation = "Установка заданного напряжения";
+        pCommandInfo->Name = tr("Set Volt Limit");//"Установить напряжение";//"SET_VOLT_LIMIT_F";
+        pCommandInfo->Annotation = tr("Set Volt Limit a");//"Установка заданного напряжения";
         pCommandInfo->NumParam = 1;
         break;
     case 4:
-        pCommandInfo->Name = "Установить силу тока";//"SET_CURR_LIMIT_F";
-        pCommandInfo->Annotation = "Установка заданной силы тока";
+        pCommandInfo->Name = tr("Set Curr Limit");//"Установить силу тока";//"SET_CURR_LIMIT_F";
+        pCommandInfo->Annotation = tr("Set Curr Limit a");//"Установка заданной силы тока";
         pCommandInfo->NumParam = 1;
         break;
     case 5:
-        pCommandInfo->Name = "Состоянием вывода";//"SET_OUTPUT_STATE_F";
-        pCommandInfo->Annotation = "Вкл / выкл вывод данных";
+        pCommandInfo->Name = tr("Output State");//"Состояние вывода";//"SET_OUTPUT_STATE_F";
+        pCommandInfo->Annotation = tr("Output State a");//"Вкл / выкл вывод данных";
         pCommandInfo->NumParam = 1;
         break;
     case 6:
-        pCommandInfo->Name = "Установить тип управления";//"SET_SETTING_MODE_F";
-        pCommandInfo->Annotation = "Локальное / Удаленное / Удаленное без отображения статуса на панели устройства";
+        pCommandInfo->Name = tr("Set Control Mode");//"Установить тип управления";//"SET_SETTING_MODE_F";
+        pCommandInfo->Annotation = tr("Set Control Mode a");//"Локальное / Удаленное / Удаленное без отображения статуса на панели устройства";
         pCommandInfo->NumParam = 1;
         break;
     case 7:
-        pCommandInfo->Name = "Установить режим запуска";//"SET_START_MODE_F";
-        pCommandInfo->Annotation = "Безопасный старт / Авто перезагрузка";
+        pCommandInfo->Name = tr("Set Start Mode");//"Установить режим запуска";//"SET_START_MODE_F";
+        pCommandInfo->Annotation = tr("Set Start Mode a");//"Безопасный старт / Авто перезагрузка";
         pCommandInfo->NumParam = 1;
         break;
     case 8:
-        pCommandInfo->Name = "Установить верхнюю границу напряжения";//"SET_OVERVOLT_PROTECTION_F";
-        pCommandInfo->Annotation = "Установить верхнюю границу напряжения";
+        pCommandInfo->Name = tr("Set Overvolt Protection");//"Установить верхнюю границу напряжения";//"SET_OVERVOLT_PROTECTION_F";
+        pCommandInfo->Annotation = tr("Set Overvolt Protection a");//"Установить верхнюю границу напряжения";
         pCommandInfo->NumParam = 1;
         break;
     case 9:
-        pCommandInfo->Name = "Установить нижнюю границу напряжения";//"SET_UNDERVOLT_LIMIT_F";
-        pCommandInfo->Annotation = "Установить нижнюю границу напряжения";
+        pCommandInfo->Name = tr("Set Undervolt Limit");//"Установить нижнюю границу напряжения";//"SET_UNDERVOLT_LIMIT_F";
+        pCommandInfo->Annotation = tr("Set Undervolt Limit a");//"Установить нижнюю границу напряжения";
         pCommandInfo->NumParam = 1;
         break;
     case 10:
-        pCommandInfo->Name = "Использовать защиту с задержкой";//"SET_FOLDBACK_PROTECTION_F";
-        pCommandInfo->Annotation = "Вкл / выкл режим работы с защитой";
+        pCommandInfo->Name = tr("Set Folback Protection");//"Использовать защиту с задержкой";//"SET_FOLDBACK_PROTECTION_F";
+        pCommandInfo->Annotation = tr("Set Folback Protection a");//"Вкл / выкл режим работы с защитой";
         pCommandInfo->NumParam = 1;
         break;
     case 11:
-        pCommandInfo->Name = "Сброс";//"RESET_PS_SETTINGS_F";
-        pCommandInfo->Annotation = "Установить настройки по умолчанию";
+        pCommandInfo->Name = tr("Reset");//"Сброс";//"RESET_PS_SETTINGS_F";
+        pCommandInfo->Annotation = tr("Reset a");"Установить настройки по умолчанию";
         pCommandInfo->NumParam = 0;
         break;
     case 12:
-        pCommandInfo->Name = "Установить соеденение";//"RESET_PS_SETTINGS_F";
-        pCommandInfo->Annotation = "Установить соеденение с источником питания";
+        pCommandInfo->Name = tr("Connect");//"Установить соеденение";//"RESET_PS_SETTINGS_F";
+        pCommandInfo->Annotation = tr("Connect a");//"Установить соеденение с источником питания";
         pCommandInfo->NumParam = 0;
         break;
     }
@@ -204,30 +204,30 @@ int LambdaPlugin::getCommandParamInfo(int nCommand, int nParam,
     case 4:
     case 8:
     case 9:
-        pCommandParamInfo->Name = "Параметр";
-        pCommandParamInfo->Annotation = "Значение";
+        pCommandParamInfo->Name = tr("Parameter");
+        pCommandParamInfo->Annotation = tr("Parameter");
         pCommandParamInfo->Type = TYPE_DOUBLE;
         pCommandParamInfo->LRange = 0;
         pCommandParamInfo->RRange = 0;
         break;
     case 5:
     case 10:
-        pCommandParamInfo->Name = "Статус";
-        pCommandParamInfo->Annotation = "ВЫКЛ\nВКЛ\n";
+        pCommandParamInfo->Name = tr("Status");
+        pCommandParamInfo->Annotation = tr("OFF\nON\n");
         pCommandParamInfo->Type = TYPE_ENUM;
         pCommandParamInfo->LRange = 0;
         pCommandParamInfo->RRange = 0;
         break;
     case 6:
-        pCommandParamInfo->Name = "Тип управления";
-        pCommandParamInfo->Annotation = "Локальное\nУдаленное\nУдаленное без отображение на панели\n";
+        pCommandParamInfo->Name = tr("Control Mode");//"Тип управления";
+        pCommandParamInfo->Annotation = tr("Local\nRemote\nSilent Remote\n");
         pCommandParamInfo->Type = TYPE_ENUM;
         pCommandParamInfo->LRange = 0;
         pCommandParamInfo->RRange = 0;
         break;
     case 7:
-        pCommandParamInfo->Name = "Режим запуска";
-        pCommandParamInfo->Annotation = "Безопасный старт\nАвто перезагрузка\n";
+        pCommandParamInfo->Name = tr("Start Mode");
+        pCommandParamInfo->Annotation = tr("Safe Statr\nAuto Restart\n");
         pCommandParamInfo->Type = TYPE_ENUM;
         pCommandParamInfo->LRange = 0;
         pCommandParamInfo->RRange = 0;
@@ -294,31 +294,31 @@ int LambdaPlugin::getDRInfo(int nVar, DrvVariableInfo *pDataVariable)
     switch(nVar)
     {
     case 0:
-        pDataVariable->Name = "U";
-        pDataVariable->Annotation = "Текущее напряжение";
+        pDataVariable->Name = tr("U");
+        pDataVariable->Annotation = tr("Voltage a");//"Текущее напряжение";
         pDataVariable->Type = TYPE_DOUBLE;
-        pDataVariable->ED = "В";
+        pDataVariable->ED = tr("V");
         pDataVariable->pValue = (void*) &core->voltage;
         break;
     case 1:
-        pDataVariable->Name = "I";
-        pDataVariable->Annotation = "Текущая сила тока";
+        pDataVariable->Name = tr("I");
+        pDataVariable->Annotation = tr("Current a");//"Текущая сила тока";
         pDataVariable->Type = TYPE_DOUBLE;
-        pDataVariable->ED = "А";
+        pDataVariable->ED = tr("A");
         pDataVariable->pValue = (void*) &core->current;
         break;
     case 2:
-        pDataVariable->Name = "Umin";
-        pDataVariable->Annotation = "Мин. Напряжение";
+        pDataVariable->Name = tr("Umin");
+        pDataVariable->Annotation = tr("min Volt a");//"Мин. Напряжение";
         pDataVariable->Type = TYPE_DOUBLE;
-        pDataVariable->ED = "В";
+        pDataVariable->ED = tr("V");
         pDataVariable->pValue = (void*) &core->uVolt;
         break;
     case 3:
-        pDataVariable->Name = "Umax";
-        pDataVariable->Annotation = "Макс. Напряжение";
+        pDataVariable->Name = tr("Umax");
+        pDataVariable->Annotation = tr("max Volt a");//"Макс. Напряжение";
         pDataVariable->Type = TYPE_DOUBLE;
-        pDataVariable->ED = "В";
+        pDataVariable->ED = tr("V");
         pDataVariable->pValue = (void*) &core->oVolt;
         break;
     }
