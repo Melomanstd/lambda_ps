@@ -265,78 +265,83 @@ Auto Restart
         <translation>Соединение</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="210"/>
+        <location filename="mainwindow.ui" line="91"/>
+        <source>Status:</source>
+        <translation>Статус:</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="217"/>
         <source>VOLTAGE LIMIT</source>
         <translation>Напряжение</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="272"/>
+        <location filename="mainwindow.ui" line="279"/>
         <source>Voltage:</source>
         <translation>Вольт</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="322"/>
+        <location filename="mainwindow.ui" line="329"/>
         <source>Operation Mode</source>
         <translation>Режим управления</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="376"/>
+        <location filename="mainwindow.ui" line="383"/>
         <source>Power Up Mode</source>
         <translation>Режим старта</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="427"/>
+        <location filename="mainwindow.ui" line="434"/>
         <source>Output State</source>
         <translation>Вывод</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="452"/>
-        <location filename="mainwindow.ui" line="509"/>
+        <location filename="mainwindow.ui" line="459"/>
+        <location filename="mainwindow.ui" line="516"/>
         <source>ON/OFF</source>
         <translation>ВКЛ/ВЫКЛ</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="484"/>
+        <location filename="mainwindow.ui" line="491"/>
         <source>Foldback Protection</source>
         <translation>Защита</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="602"/>
+        <location filename="mainwindow.ui" line="609"/>
         <source>CURRENT LIMIT</source>
         <translation>Сила тока</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="644"/>
+        <location filename="mainwindow.ui" line="651"/>
         <source>Ampers:</source>
         <translation>Ампер</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="678"/>
+        <location filename="mainwindow.ui" line="685"/>
         <source>Output Voltage</source>
         <translation>Текущее напряжение</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="848"/>
+        <location filename="mainwindow.ui" line="855"/>
         <source>Output Current</source>
         <translation>Текущий ток</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1020"/>
+        <location filename="mainwindow.ui" line="1027"/>
         <source>Constant Mode:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1027"/>
+        <location filename="mainwindow.ui" line="1034"/>
         <source>MODE</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1037"/>
+        <location filename="mainwindow.ui" line="1044"/>
         <source>Reset Setting</source>
         <translation>Сброс</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1050"/>
+        <location filename="mainwindow.ui" line="1057"/>
         <source>PushButton</source>
         <translation></translation>
     </message>
